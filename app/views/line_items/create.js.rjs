@@ -1,0 +1,19 @@
+page["#cart"].html(render(@cart));
+
+if @cart.total_items == 1
+  # page["#contentcart"].attr("style","display:block;");
+  page["#cart"].attr("class","well");
+  page["#cart"].effect("bounce",600);
+end
+page[".alert"].alert('close');
+page["#current_item"].effect("highlight",2000);
+
+
+
+
+
+#page.alert "llll";
+# Ruby code
+#page.call 'displayError', 'An error occurred', 'Critical'
+#Generated JavaScript
+#displayError("An error occurred", "Critical");

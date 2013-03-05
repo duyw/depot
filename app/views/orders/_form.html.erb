@@ -1,0 +1,48 @@
+<%= form_for(@order, :html => {:class =>"form-horizontal"}) do |f| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-error fade in" id="notice">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h3><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h3>
+        <% @order.errors.full_messages.each do |msg| %>
+          <%= msg %><br/>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label "姓名", :for => "order_name", :class=>"control-label" %>
+    <div class="controls">
+      <%= f.text_field :name %>
+      <span class="help-inline">姓名不能为空</span>
+      <p class="help-block">请输入您的姓名</p>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label "通讯地址", :for => "order_address", :class=>"control-label" %>
+    <div class="controls">
+      <%= f.text_area :address, :rows => 3, :class => "input-xlarge" %>
+      <p class="help-block">请输入您的详细通讯地址</p>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label "Email", :for => "order_email", :class=>"control-label" %>
+    <div class="controls">
+      <%= f.text_field :email %>
+      <p class="help-block">请输入电子邮箱地址</p>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label "支付方式", :for => "order_pay_type", :class=>"control-label" %>
+    <div class="controls">
+      <%= f.select :pay_type, Order::PAYMENT_TYPES, :prompt => "请选择支付方式" %>
+      <p class="help-block"></p>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit "订单确认", :class => "btn btn-primary" %>  
+    </div>
+  </div>
+<% end %>

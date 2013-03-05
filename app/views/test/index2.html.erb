@@ -1,0 +1,115 @@
+ <div class='content'>
+        <h2><b>JavaScript消息提示框类库 – Alertify  演示页面</b></h2>
+        <h3><span>自定义对话框</span></h3>
+    <nav class="button-group">
+      <a class="button-primary" href="#" id="alert">Alert Dialog</a>
+      <a class="button-primary" href="#" id="confirm">Confirm Dialog</a>
+      <a class="button-primary" href="#" id="prompt">Prompt Dialog</a>
+    </nav>
+
+        <h3><span>自定义按钮文字</span></h3>
+    <nav class="button-group">
+      <a class="button-primary" href="#" id="alert2">Alert Dialog</a>
+      <a class="button-primary" href="#" id="confirm2">Confirm Dialog</a>
+      <a class="button-primary" href="#" id="prompt2">Prompt Dialog</a>
+    </nav>
+    <p><label for="okVal">Custom "OK" label: </label><input type="text" id="okVal" value="确定" />&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="cancelVal">Custom "Cancel" label: </label><input type="text" id="cancelVal"  value="取消"/></p>
+
+
+      <h3><span>自定义提示信息</span></h3>
+    <nav class="button-group">
+      <a class="button-primary" href="#" id="log1">Notification</a>
+      <a class="button-primary" href="#" id="log2">Success</a>
+      <a class="button-primary" href="#" id="log3">Error</a>
+    </nav>
+<style type="text/css">
+        article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block}[hidden]{display:none}html{font-size:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}html,button,input,select,textarea{font-family:sans-serif}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h3{font-size:15px;margin:0 0 1em}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle}button,input{line-height:normal}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer;*overflow:visible}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}.media,.mediaBody{overflow:hidden;zoom:1}.clearfix{zoom:1}.clearfix:before,.clearfix:after{content:"";display:table}.clearfix:after{clear:both}h3{position:relative;z-index:1;text-shadow:0 -1px 0 #fff;font:italic normal 32px/1.2 Georgia,Times,serif;margin-bottom:15px}h3 span{display:inline-block;padding:5px;padding-left:0;background:#F5F5F5}h3:before{position:absolute;z-index:-1;top:50%;left:0;right:0;border-top:1px dashed #AAA;border-bottom:1px dashed #FFF;content:""}label{display:inline-block;width:200px}input{border:1px solid #CCC;background:#FFF;padding:5px;margin-bottom:10px}.button-group{margin-bottom:15px}.button,.button-primary,.button-secondary{border-radius:4px;color:#FFF;padding:7.5px 15px;text-decoration:none;border:1px solid rgba(0,0,0,0.05);text-shadow:-1px -1px 0 rgba(0,0,0,0.6);box-shadow:inset 0 1px 0 0 rgba(255,255,255,0.4);display:inline-block;background-image:-webkit-linear-gradient(top,rgba(255,255,255,0.3),rgba(255,255,255,0));background-image:-moz-linear-gradient(top,rgba(255,255,255,0.3),rgba(255,255,255,0));background-image:-ms-linear-gradient(top,rgba(255,255,255,0.3),rgba(255,255,255,0));background-image:-o-linear-gradient(top,rgba(255,255,255,0.3),rgba(255,255,255,0));background-image:linear-gradient(top,rgba(255,255,255,0.3),rgba(255,255,255,0))}.button:hover,.button-primary:hover,.button-secondary:hover,.button:focus,.button-primary:focus,.button-secondary:focus{background-image:-webkit-linear-gradient(top,rgba(0,0,0,0.1),rgba(0,0,0,0));background-image:-moz-linear-gradient(top,rgba(0,0,0,0.1),rgba(0,0,0,0));background-image:-ms-linear-gradient(top,rgba(0,0,0,0.1),rgba(0,0,0,0));background-image:-o-linear-gradient(top,rgba(0,0,0,0.1),rgba(0,0,0,0));background-image:linear-gradient(top,rgba(0,0,0,0.1),rgba(0,0,0,0))}.button-primary{background-color:#2971D5}.button-secondary{text-shadow:-1px -1px 0 rgba(255,255,255,0.6);background-color:#DDD;color:#666}@media only screen and (max-width:980px){.container{width:95%}.button,.button-primary,.button-secondary{margin-bottom:15px}}
+    </style>
+<script src="/javascripts/alertify.js" type="text/javascript"></script>
+<script type="text/javascript">
+        var lAlert = document.getElementById("alert"),
+        lConfirm = document.getElementById("confirm"),
+        lPrompt = document.getElementById("prompt"),
+        lAlert2 = document.getElementById("alert2"),
+        lConfirm2 = document.getElementById("confirm2"),
+        lPrompt2 = document.getElementById("prompt2"),
+        ok = document.getElementById("okVal"),
+        cancel = document.getElementById("cancelVal"),
+
+        log1 = document.getElementById("log1"),
+        log2 = document.getElementById("log2"),
+        log3 = document.getElementById("log3"),
+        setLabel;
+
+            setLabel = function (reset) {
+                reset = reset || false;
+                alertify.labels.ok = (ok.value && !reset) ? ok.value : "OK";
+                alertify.labels.cancel = (cancel.value && !reset) ? cancel.value : "Cancel";
+            };
+
+            lAlert.onclick = function () {
+                setLabel(true);
+                alertify.alert("这是 alert 提示框");
+                return false;
+            };
+
+            lConfirm.onclick = function () {
+                setLabel(true);
+                alertify.confirm("<p>这是 confirm 提示框.<br>按下 回车 和 ESC 键 会触发 OK 和 Cancel 事件.</p>", function (e) {
+                    if (e) {
+                        alertify.success("你点击的是 '" + alertify.labels.ok + "'");
+                    } else {
+                        alertify.error("你点击的是 '" + alertify.labels.cancel + "'");
+                    }
+                });
+                return false;
+            };
+
+            lPrompt.onclick = function () {
+                setLabel(true);
+                alertify.prompt("<p>这是 prompt 提示框.<br>按下 回车 和 ESC 键 会触发 OK 和 Cancel 事件.</p>", function (e, str) {
+                    if (e) {
+                        alertify.success("你点击的是 '" + alertify.labels.ok + "' ，输入的文字是: " + str);
+                    } else {
+                        alertify.error("你点击的是 '" + alertify.labels.cancel + "'");
+                    }
+                });
+                return false;
+            };
+
+            lAlert2.onclick = function () {
+                setLabel();
+                alertify.alert("自定义按钮的 alert 提示框."); return false;
+            };
+
+            lConfirm2.onclick = function () {
+                setLabel();
+                alertify.confirm("自定义按钮的 confirm 提示框.", function (e) {
+                    if (e) {
+                        alertify.success("你点击的是 '" + alertify.labels.ok + "'");
+                    } else {
+                        alertify.error("你点击的是 '" + alertify.labels.cancel + "'");
+                    }
+                });
+                return false;
+            };
+
+            lPrompt2.onclick = function () {
+                setLabel();
+                alertify.prompt("自定义按钮的 prompt 提示框", function (e, str) {
+                    if (e) {
+                        alertify.success("你点击的是  '" + alertify.labels.ok + "' ，输入的文字是: " + str);
+                    } else {
+                        alertify.error("你点击的是  '" + alertify.labels.cancel + "'");
+                    }
+                });
+                return false;
+            };
+
+            log1.onclick = function () { alertify.log("标准 log 消息."); return false; };
+            log2.onclick = function () { alertify.success("success 消息."); return false; };
+            log3.onclick = function () { alertify.error("error 消息."); return false; };
+  </script>
+
+    </div>

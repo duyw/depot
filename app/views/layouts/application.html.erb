@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Depot</title>
+    <%= stylesheet_link_tag "alertify", :media => "all" %>
+    <%= stylesheet_link_tag "bootstrap",:media => "all" %>
+    <%= stylesheet_link_tag "depot",    :media => "all" %>
+    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag "bootstrap" %>
+    <%= csrf_meta_tag %>
+  </head>
+
+  <body>
+    <!-- 导航条 -->
+    <div class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner ">
+        <div class="container">
+          <%= link_to "Book Store", :store ,{:class=>"brand"}%>
+          <ul class="nav">
+            <li class="<%= "active" if params[:controller] == "store" %>">
+              <%= link_to "商店" ,store_path %>
+            </li>
+            <li class="<%= "active" if params[:controller] == "users" %>">
+              <%= link_to "用户管理", users_path %>
+            </li>
+            <li class="#{@active}"><a href="">链接2</a></li>
+            <li class="divider-vertical"></li>
+            <li class=" dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-list icon-white"></i>Demo<b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="">测试一</a></li>
+                <li><%= link_to "测试二",:controller => "test",:action => "index" %></li>
+                <li><%= link_to "消息提示框Alertify 演示",:controller => "test",:action => "index2" %></li>
+              </ul>
+            </li>
+          </ul>
+
+          <% if session[:current_user] %>
+          <ul class="nav pull-right">
+            <li class="divider-vertical"></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-user icon-white"></i> <%= session[:current_user].name.humanize %><b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="nav-header">账户管理</li>
+                <li><a href="#">个人信息</a></li>
+                <li><a href="#">修改密码</a></li>
+                <li class="divider"></li>
+                <li><%= link_to "退出登录", logout_path, :method => "delete" %></li>
+              </ul>
+            </li>
+          </ul>
+          <% else %>
+            <ul class="nav pull-right">
+              <li>
+                <%= link_to "登录" ,login_path %>
+              </li>
+            </ul>
+          <% end %> 
+
+          <form class="navbar-search  pull-right">
+            <input type="text" class="span2 search-query" placeholder="搜索">
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <br/><br/><br/>
+
+    <div class="container">
+      <div class="row">
+
+        <!-- 左侧菜单 -->
+        <div class="span3 bs-docs-sidebar">
+          <% if session[:current_user] %>
+          <div class="well" style="padding: 8px 0;">
+            <ul class="nav nav-list">
+              <li class="nav-header">
+                列表头
+              </li>
+              <li class="<%= "active" if params[:controller] == "products" %>">
+                <%= link_to "图书管理", products_path%>
+              </li>
+              <li class="<%= "active" if params[:controller] == "users" %>">
+                <%= link_to "用户管理", users_path%>
+              </li>
+              <li class="<%= "active" if params[:controller] == "orders" %>">
+                <%= link_to "订单管理", orders_path%>
+              </li>
+              <li></li>
+            </ul>
+          </div>
+          <% end %>
+
+          <%#hidden_div_if(@cart.line_items.empty?,:id=>"contentcart") do %>
+          <% 
+            if @cart.blank? or @cart.total_items == 0
+              @classname = ""
+            else
+              @classname = "well"
+            end 
+          %>
+          <div class="<%= @classname %>" id="cart">
+            <% unless @cart.blank? || @cart.line_items.empty? %>
+            <%= render @cart %>
+            <% end %>
+          </div>
+          <%#end %>
+
+          <ul class="nav nav-list bs-docs-sidenav affix-top">
+            <li class="active">
+              <%= link_to "1. 消息提示框Alertify 演示",:controller => "test",:action => "index2" %>
+            </li>
+            <li class="">
+              <a href="#plugins"><i class="icon-chevron-right"></i> 2. Select jQuery plugins</a>
+            </li>
+            <li class="">
+              <a href="#variables"><i class="icon-chevron-right"></i> 3. Customize variables</a>
+            </li>
+            <li class="">
+              <a href="#download"><i class="icon-chevron-right"></i> 4. Download</a>
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="span9"> 
+          <%= yield %>
+        </div>
+
+      </div>
+    </div>
+  </body>
+
+</html>

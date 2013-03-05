@@ -1,0 +1,22 @@
+<p class="lead">购物车</p>
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <td>名称</td>
+      <td>数量</td>
+      <td>价格</td>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <%= render(cart.line_items) %>
+    <tr>
+      <td>合计</td>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><%= number_to_currency(cart.total_price) %></td>
+    </tr>
+  </tbody>
+</table>
+<%= button_to "清空",cart, {:confirm => "您确定要清空购物车吗？",:class =>"btn btn-danger btn-small pull-left",:method => "delete"}%>
+<%= button_to "去结算",new_order_path, {:class =>"btn btn-success btn-small pull-right",:method => "get"}%>
+<br/>
